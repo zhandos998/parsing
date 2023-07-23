@@ -76,6 +76,10 @@ def get_contacts(page):
 
 def get_chats(href):
     # audio_list=[]
+    # role="application"
+    # btn_send = driver.find_element(By.XPATH, "//div[@data-testid='cell-frame-container']")
+    chatlist_classes = driver.find_elements(By.XPATH, "//div[@data-testid='cell-frame-container']")
+
     chatlist_classes = driver.find_elements(By.CLASS_NAME, "chatlist")
     a_tags = chatlist_classes[0].find_elements(By.TAG_NAME, "a")
     for a in a_tags:
@@ -182,12 +186,13 @@ def get_chats(href):
     #     print(i)
     return messages_list
 
-def send_message(text):
-    if (len(text)>=1):
-        btn_send = driver.find_element(By.CLASS_NAME, "btn-send")
-        btn_send.send_keys(text)
-        btn_send.find_element(By.CLASS_NAME, "c-ripple").click()
-    pass
+# def send_message(text):
+#     if (len(text)>=1):
+#         # btn_send = driver.find_element(By.CLASS_NAME, "btn-send")
+#         btn_send = driver.find_element(By.XPATH, "//div[@data-testid='cell-frame-container']")
+#         btn_send.send_keys(text)
+#         btn_send.click()
+#     pass
 
 driver = webdriver.Chrome()
 driver.get("https://web.whatsapp.com/")
@@ -206,7 +211,9 @@ while True:
         }
         
         connect2db.send_to_db_contact(contacts_data)
-        # result = connect2db.get_link_db(ID)
+        result = connect2db.get_link_db(ID)
+        data = get_chats("Дарига")
+        print(data)
         # if result[2]==None:
         #     data = get_chats(result[1])
             
